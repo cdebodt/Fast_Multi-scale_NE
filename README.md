@@ -6,36 +6,43 @@ Fast Multi-scale Neighbor Embedding
 
 At the end of the fast_ms_ne.py file, a demo presents how this python code can be used. Running this file (python fast_ms_ne.py) will run the demo. Importing this module will not run the demo. The demo takes a few minutes. To be able to use the code in fast_ms_ne.py, do not forget to first compile the Cython file 'cython_implem.pyx'; check the instructions below for explanations on the required compilation steps. 
 
-%%%% !!! -------------- !!! %%%%
+%%%% !!!                !!! %%%%
 
 
 This project and the codes in this repository implement fast multi-scale neighbor embedding algorithms for nonlinear dimensionality reduction (DR). 
 
-The fast algorithms which are implemented are described in the article "Fast Multi-scale Neighbor Embedding", from Cyril de Bodt, Dounia Mulders, Michel Verleysen and John A. Lee, currently under review in IEEE Transactions on Neural Networks and Learning Systems, in 2020.
+The fast algorithms which are implemented are described in the article "Fast Multiscale Neighbor Embedding", from Cyril de Bodt, Dounia Mulders, Michel Verleysen and John A. Lee, published in IEEE Transactions on Neural Networks and Learning Systems, in 2020. 
 
 The implementations are provided using the python programming language, but involve some C and Cython codes for performance purposes. 
 
 
+Link to retrieve the article: https://ieeexplore.ieee.org/document/9308987
+
+
 If you use the codes in this repository or the article, please cite as: 
 
-- de Bodt, C., Mulders, D., Verleysen, M., & Lee, J. A. (2020). Fast Multi-scale Neighbor Embedding. Submitted to IEEE transactions on neural networks and learning systems. Under review.
+- C. de Bodt, D. Mulders, M. Verleysen and J. A. Lee, "Fast Multiscale Neighbor Embedding," in IEEE Transactions on Neural Networks and Learning Systems, 2020, doi: 10.1109/TNNLS.2020.3042807.
 
 - BibTeX entry:
 
-@article{cdb2020fms,
+@article{CdB2020FMsNE,
 
-  title={{F}ast {M}ulti-scale {N}eighbor {E}mbedding},
-  
-  author={de Bodt, C. and Mulders, D. and Verleysen, M. and Lee, J. A.},
-  
-  journal={{IEEE} Trans. Neural Netw. Learn. Syst.},
-  
-  year={2020},
-  
-  note={Under review}
-  
-}
-
+ author={C. {de Bodt} and D. {Mulders} and M. {Verleysen} and J. A. {Lee}},
+ 
+ journal={{IEEE} Trans. Neural Netw. Learn. Syst.},
+ 
+ title={{F}ast {M}ultiscale {N}eighbor {E}mbedding}, 
+ 
+ year={2020},
+ 
+ volume={},
+ 
+ number={},
+ 
+ pages={1-15},
+ 
+ doi={10.1109/TNNLS.2020.3042807}}
+ 
 
 The files contained in this repository are:
 
@@ -105,7 +112,7 @@ Notations:
 
 References:
 
-[1] de Bodt, C., Mulders, D., Verleysen, M., & Lee, J. A. (2020). Fast Multi-scale Neighbor Embedding. Submitted to IEEE transactions on neural networks and learning systems. Under review. 
+[1] C. de Bodt, D. Mulders, M. Verleysen and J. A. Lee, "Fast Multiscale Neighbor Embedding," in IEEE Transactions on Neural Networks and Learning Systems, 2020, doi: 10.1109/TNNLS.2020.3042807.
 
 [2] Lee, J. A., Peluffo-Ordóñez, D. H., & Verleysen, M. (2015). Multi-scale similarities in stochastic neighbour embedding: Reducing dimensionality while preserving both local and global structure. Neurocomputing, 169, 246-261.
 
@@ -122,13 +129,13 @@ References:
 [8] van der Maaten, L. (2014). Accelerating t-SNE using tree-based algorithms. Journal of Machine Learning Research, 15(1), 3221-3245.
 
 
-author: Cyril de Bodt (ICTEAM - UCLouvain)
+author: Cyril de Bodt (Human Dynamics - MIT Media Lab, and ICTEAM - UCLouvain)
 
-@email: cyril __dot__ debodt __at__ uclouvain.be
+@email: cdebodt __at__ mit __dot__ edu, or cyril __dot__ debodt __at__ uclouvain.be
 
-Last modification date: May 30th, 2020
+Last modification date: Jan 21th, 2021
 
-Copyright (c) 2020 Université catholique de Louvain (UCLouvain), ICTEAM. All rights reserved.
+Copyright (c) 2021 Université catholique de Louvain (UCLouvain), ICTEAM. All rights reserved.
 
 
 The codes in this repository were tested with Python 3.6.5 (Anaconda distribution, Continuum Analytics, Inc.). They use the following modules:
