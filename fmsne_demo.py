@@ -134,7 +134,7 @@ if __name__ == '__main__':
             t0 = time.time()
             X_ld_mstsne = fmsnepy.mstsne(X_hds=X_hds, n_components=dim_LDS, init=init_ld_emb, rand_state=fmsnepy.np.random.RandomState(2))
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
 
             ###
             ###
@@ -145,8 +145,8 @@ if __name__ == '__main__':
             t0 = time.time()
             rnx_mstsne, auc_mstsne = fmsnepy.eval_dr_quality(d_hd=dm_hd, d_ld=fmsnepy.eucl_dist_matr(X_ld_mstsne))
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
-            print('AUC: {v}'.format(v=rstr(auc_mstsne, 4)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
+            print('AUC: {v}'.format(v=fmsnepy.rstr(auc_mstsne, 4)))
 
             # Updating the lists for viz_qa
             L_rnx.append(rnx_mstsne)
@@ -180,7 +180,7 @@ if __name__ == '__main__':
             t0 = time.time()
             X_ld_mssne = fmsnepy.mssne(X_hds=X_hds, n_components=dim_LDS, init=init_ld_emb, rand_state=fmsnepy.np.random.RandomState(2))
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
 
             ###
             ###
@@ -189,8 +189,8 @@ if __name__ == '__main__':
             t0 = time.time()
             rnx_mssne, auc_mssne = fmsnepy.eval_dr_quality(d_hd=dm_hd, d_ld=fmsnepy.eucl_dist_matr(X_ld_mssne))
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
-            print('AUC: {v}'.format(v=rstr(auc_mssne, 4)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
+            print('AUC: {v}'.format(v=fmsnepy.rstr(auc_mssne, 4)))
 
             # Updating the lists for viz_qa
             L_rnx.append(rnx_mssne)
@@ -224,7 +224,7 @@ if __name__ == '__main__':
             t0 = time.time()
             X_ld_tsne = sklearn.manifold.TSNE(n_components=dim_LDS, perplexity=50.0, early_exaggeration=4.0, n_iter=1000, learning_rate=100.0, min_grad_norm=10.0**(-5), random_state=fmsnepy.np.random.RandomState(2), metric='euclidean', init=init_ld_emb, method='exact').fit_transform(X_hds)
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
 
             ###
             ###
@@ -233,8 +233,8 @@ if __name__ == '__main__':
             t0 = time.time()
             rnx_tsne, auc_tsne = fmsnepy.eval_dr_quality(d_hd=dm_hd, d_ld=fmsnepy.eucl_dist_matr(X_ld_tsne))
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
-            print('AUC: {v}'.format(v=rstr(auc_tsne, 4)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
+            print('AUC: {v}'.format(v=fmsnepy.rstr(auc_tsne, 4)))
 
             # Updating the lists for viz_qa
             L_rnx.append(rnx_tsne)
@@ -269,7 +269,7 @@ if __name__ == '__main__':
         t0 = time.time()
         X_ld_fmstsne = fmsnepy.fmstsne(X_hds=X_hds, n_components=dim_LDS, init=init_ld_emb, rand_state=fmsnepy.np.random.RandomState(2), bht=0.75, fseed=1)
         t = time.time() - t0
-        print('Done. It took {t} seconds.'.format(t=rstr(t)))
+        print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
 
         ###
         ###
@@ -281,15 +281,15 @@ if __name__ == '__main__':
             t0 = time.time()
             rnx_fmstsne, auc_fmstsne = fmsnepy.red_rnx_auc(X_hds=X_hds, X_lds=X_ld_fmstsne, Kup=Kup)
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
-            print('AUC: {v}'.format(v=rstr(auc_fmstsne, 4)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
+            print('AUC: {v}'.format(v=fmsnepy.rstr(auc_fmstsne, 4)))
         else:
             print('- Evaluating the DR quality of the LD embedding obtained using fast multi-scale t-SNE')
             t0 = time.time()
             rnx_fmstsne, auc_fmstsne = fmsnepy.eval_dr_quality(d_hd=dm_hd, d_ld=fmsnepy.eucl_dist_matr(X_ld_fmstsne))
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
-            print('AUC: {v}'.format(v=rstr(auc_fmstsne, 4)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
+            print('AUC: {v}'.format(v=fmsnepy.rstr(auc_fmstsne, 4)))
 
         # Updating the lists for viz_qa
         L_rnx.append(rnx_fmstsne)
@@ -324,7 +324,7 @@ if __name__ == '__main__':
         t0 = time.time()
         X_ld_fmssne = fmsnepy.fmssne(X_hds=X_hds, n_components=dim_LDS, init=init_ld_emb, rand_state=fmsnepy.np.random.RandomState(2), bht=0.45, fseed=1)
         t = time.time() - t0
-        print('Done. It took {t} seconds.'.format(t=rstr(t)))
+        print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
 
         ###
         ###
@@ -336,15 +336,15 @@ if __name__ == '__main__':
             t0 = time.time()
             rnx_fmssne, auc_fmssne = fmsnepy.red_rnx_auc(X_hds=X_hds, X_lds=X_ld_fmssne, Kup=Kup)
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
-            print('AUC: {v}'.format(v=rstr(auc_fmssne, 4)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
+            print('AUC: {v}'.format(v=fmsnepy.rstr(auc_fmssne, 4)))
         else:
             print('- Evaluating the DR quality of the LD embedding obtained using fast multi-scale SNE')
             t0 = time.time()
             rnx_fmssne, auc_fmssne = fmsnepy.eval_dr_quality(d_hd=dm_hd, d_ld=fmsnepy.eucl_dist_matr(X_ld_fmssne))
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
-            print('AUC: {v}'.format(v=rstr(auc_fmssne, 4)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
+            print('AUC: {v}'.format(v=fmsnepy.rstr(auc_fmssne, 4)))
 
         # Updating the lists for viz_qa
         L_rnx.append(rnx_fmssne)
@@ -379,7 +379,7 @@ if __name__ == '__main__':
         t0 = time.time()
         X_ld_bhtsne = sklearn.manifold.TSNE(n_components=dim_LDS, perplexity=50.0, early_exaggeration=12.0, n_iter=1000, learning_rate=200.0, min_grad_norm=10.0**(-5), random_state=fmsnepy.np.random.RandomState(2), metric='euclidean', init=init_ld_emb, method='barnes_hut', angle=0.5).fit_transform(X_hds)
         t = time.time() - t0
-        print('Done. It took {t} seconds.'.format(t=rstr(t)))
+        print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
 
         ###
         ###
@@ -391,15 +391,15 @@ if __name__ == '__main__':
             t0 = time.time()
             rnx_bhtsne, auc_bhtsne = fmsnepy.red_rnx_auc(X_hds=X_hds, X_lds=X_ld_bhtsne, Kup=Kup)
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
-            print('AUC: {v}'.format(v=rstr(auc_bhtsne, 4)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
+            print('AUC: {v}'.format(v=fmsnepy.rstr(auc_bhtsne, 4)))
         else:
             print('- Evaluating the DR quality of the LD embedding obtained using BH t-SNE')
             t0 = time.time()
             rnx_bhtsne, auc_bhtsne = fmsnepy.eval_dr_quality(d_hd=dm_hd, d_ld=fmsnepy.eucl_dist_matr(X_ld_bhtsne))
             t = time.time() - t0
-            print('Done. It took {t} seconds.'.format(t=rstr(t)))
-            print('AUC: {v}'.format(v=rstr(auc_bhtsne, 4)))
+            print('Done. It took {t} seconds.'.format(t=fmsnepy.rstr(t)))
+            print('AUC: {v}'.format(v=fmsnepy.rstr(auc_bhtsne, 4)))
 
         # Updating the lists for viz_qa
         L_rnx.append(rnx_bhtsne)
