@@ -1,11 +1,14 @@
 #! python3
 # -*-coding:Utf-8 -*
 
+import sklearn.datasets
+import time
+
 ##############################
 # Demo presenting how to use the main functions of this file.
 ####################
 
-import fmsne
+import fmsnepy
 
 if __name__ == '__main__':
     print("==============================================")
