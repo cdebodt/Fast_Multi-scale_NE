@@ -17,11 +17,11 @@ purposes.
 If you use the codes in this repository or the article, please cite
 as:
 
-- C. de Bodt, D. Mulders, M. Verleysen and J. A. Lee, "Fast Multiscale
-  Neighbor Embedding," in IEEE Transactions on Neural Networks and
-  Learning Systems, 2020, doi: 10.1109/TNNLS.2020.3042807.
+> C. de Bodt, D. Mulders, M. Verleysen and J. A. Lee, "Fast Multiscale
+> Neighbor Embedding," in IEEE Transactions on Neural Networks and
+> Learning Systems, 2020, doi: 10.1109/TNNLS.2020.3042807.
 
-- BibTeX entry:
+BibTeX entry:
 ```
 @article{CdB2020FMsNE,
  author={C. {de Bodt} and D. {Mulders} and M. {Verleysen} and J. A. {Lee}},
@@ -61,41 +61,43 @@ Python distribution.
 
 ## Package functionality
 
-The main functions of the fast_ms_ne.py file are:
+Neighbor Embedding
 
-- 'mssne': nonlinear dimensionality reduction through multi-scale SNE
+- `mssne`: nonlinear dimensionality reduction through multi-scale SNE
   (Ms SNE), as presented in the reference [2] below and summarized in
   [1]. This function enables reducing the dimension of a data
   set. Given a data set with N samples, the 'mssne' function has
   O(N**2 log(N)) time complexity. It can hence run on databases with
   up to a few thousands of samples. This function is based on the
-  Cython implementations in 'cython_implem.pyx'.
+  Cython implementations in `fmsne_implem.pyx`.
 
-- 'mstsne': nonlinear dimensionality reduction through multi-scale
+- `mstsne`: nonlinear dimensionality reduction through multi-scale
   t-SNE (Ms t-SNE), as presented in the reference [6] below and
   summarized in [1]. This function enables reducing the dimension of a
   data set. Given a data set with N samples, the 'mstsne' function has
   O(N**2 log(N)) time complexity. It can hence run on databases with
   up to a few thousands of samples. This function is based on the
-  Cython implementations in 'cython_implem.pyx'.
+  Cython implementations in `fmsne_implem.pyx`.
 
-- 'fmssne': nonlinear dimensionality reduction through fast
+- `fmssne`: nonlinear dimensionality reduction through fast
   multi-scale SNE (FMs SNE), as presented in the reference [1]
   below. This function enables reducing the dimension of a data
   set. Given a data set with N samples, the 'fmssne' function has O(N
   (log(N))**2) time complexity. It can hence run on very large-scale
   databases. This function is based on the Cython implementations in
-  'cython_implem.pyx'.
+  `fmsne_implem.pyx`.
 
-- 'fmstsne': nonlinear dimensionality reduction through fast
+- `fmstsne`: nonlinear dimensionality reduction through fast
   multi-scale t-SNE (FMs t-SNE), as presented in the reference [1]
   below. This function enables reducing the dimension of a data
   set. Given a data set with N samples, the 'fmstsne' function has O(N
   (log(N))**2) time complexity. It can hence run on very large-scale
   databases. This function is based on the Cython implementations in
-  'cython_implem.pyx'.
+  `fmsne_implem.pyx`.
 
-- 'eval_dr_quality': unsupervised evaluation of the quality of a
+Quality control
+
+- `eval_dr_quality`: unsupervised evaluation of the quality of a
   low-dimensional embedding, as introduced in [3, 4] and employed and
   summarized in [1, 2, 5]. This function enables computing DR quality
   assessment criteria measuring the neighborhood preservation from the
@@ -105,26 +107,23 @@ The main functions of the fast_ms_ne.py file are:
   'eval_dr_quality' function has O(N**2 log(N)) time complexity. It
   can hence run using databases with up to a few thousands of
   samples. This function is not based on the Cython implementations in
-  'cython_implem.pyx'.
+  `fmsne_implem.pyx`.
 
-- 'red_rnx_auc': this function is similar to the 'eval_dr_quality'
-  function, but given a data set with N samples, the 'red_rnx_auc'
+- `red_rnx_auc`: this function is similar to the `eval_dr_quality`
+  function, but given a data set with N samples, the `red_rnx_auc`
   function has O(N*Kup*log(N)) time complexity, where Kup is the
   maximum neighborhood size accounted when computing the quality
   criteria. This function can hence run using much larger databases
-  than 'eval_dr_quality', provided that Kup is small compared to
+  than `eval_dr_quality`, provided that Kup is small compared to
   N. This function is based on the Cython implementations in
-  'cython_implem.pyx'.
+  `fmsne_implem.pyx`.
 
-- 'viz_2d_emb' and 'viz_qa': visualization of a 2-D embedding and of
-  the quality criteria. These functions respectively enable to:
+Visualization of a 2-D embedding and of the quality criteria.
 
-- 'viz_2d_emb': plot a 2-D embedding. This function is not based on
-  the Cython implementations in 'cython_implem.pyx'.
+- `viz_2d_emb`: plot a 2-D embedding.
 
-- 'viz_qa': depict the quality criteria computed by 'eval_dr_quality'
-  and 'red_rnx_auc'. This function is not based on the Cython
-  implementations in 'cython_implem.pyx'.
+- `viz_qa`: depict the quality criteria computed by `eval_dr_quality`
+  and `red_rnx_auc`.
 
 The documentations of the functions describe their parameters.
 
@@ -135,23 +134,14 @@ multi-scale neighbor embedding .
 ## Notations
 
 - DR: dimensionality reduction.
-
 - HD: high-dimensional.
-
 - LD: low-dimensional.
-
 - HDS: HD space.
-
 - LDS: LD space.
-
 - SNE: stochastic neighbor embedding.
-
 - t-SNE: t-distributed SNE.
-
 - Ms SNE: multi-scale SNE.
-
 - Ms t-SNE: multi-scale t-SNE.
-
 - BH t-SNE: Barnes-Hut t-SNE.
 
 
