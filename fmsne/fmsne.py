@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import os
 import sklearn.manifold
 
-from fmsne import fmsnepyx
+import fmsne_implem
 
 
 def init_lds(X_hds, N, init='pca', n_components=2, rand_state=None, var=10.0**(-4)):
@@ -167,7 +167,7 @@ def mssne(X_hds, n_components=2, init='pca', rand_state=None, nit_max=30, gtol=1
     # Initializing the LD embedding.
     X_lds = np.ascontiguousarray(a=np.reshape(a=init_lds(X_hds=X_hds, N=N, init=init, n_components=n_components, rand_state=rand_state), newshape=N*n_components, order='C'), dtype=np.float64)
     # Applying the multi-scale SNE algorithm
-    fmsnepyx.mssne_implem(X_hds_1D, X_lds, N, M, n_components, fit_U, nit_max, gtol, ftol, maxls, maxcor, 1)
+    fmsne_implem.mssne_implem(X_hds_1D, X_lds, N, M, n_components, fit_U, nit_max, gtol, ftol, maxls, maxcor, 1)
     # Reshaping the LDS
     X_lds = np.reshape(a=X_lds, newshape=(N, n_components), order='C')
     # Returning
@@ -238,7 +238,7 @@ def mstsne(X_hds, n_components=2, init='pca', rand_state=None, nit_max=30, gtol=
     # Initializing the LD embedding.
     X_lds = np.ascontiguousarray(a=np.reshape(a=init_lds(X_hds=X_hds, N=N, init=init, n_components=n_components, rand_state=rand_state, var=1.0), newshape=N*n_components, order='C'), dtype=np.float64)
     # Applying the multi-scale t-SNE algorithm
-    fmsnepyx.mstsne_implem(X_hds_1D, X_lds, N, M, n_components, nit_max, gtol, ftol, maxls, maxcor, 1)
+    fmsne_implem.mstsne_implem(X_hds_1D, X_lds, N, M, n_components, nit_max, gtol, ftol, maxls, maxcor, 1)
     # Reshaping the LDS
     X_lds = np.reshape(a=X_lds, newshape=(N, n_components), order='C')
     # Returning
@@ -332,7 +332,7 @@ def fmssne(X_hds, n_components=2, init='pca', rand_state=None, nit_max=30, gtol=
     # Initializing the LD embedding.
     X_lds = np.ascontiguousarray(a=np.reshape(a=init_lds(X_hds=X_hds, N=N, init=init, n_components=n_components, rand_state=rand_state), newshape=N*n_components, order='C'), dtype=np.float64)
     # Applying the fast multi-scale SNE algorithm
-    fmsnepyx.fmssne_implem(X_hds_1D, X_lds, N, M, n_components, True, 1, fit_U, bht, nit_max, gtol, ftol, maxls, maxcor, 1, fseed, False)
+    fmsne_implem.fmssne_implem(X_hds_1D, X_lds, N, M, n_components, True, 1, fit_U, bht, nit_max, gtol, ftol, maxls, maxcor, 1, fseed, False)
     # Reshaping the LDS
     X_lds = np.reshape(a=X_lds, newshape=(N, n_components), order='C')
     # Returning
@@ -421,7 +421,7 @@ def fmstsne(X_hds, n_components=2, init='pca', rand_state=None, nit_max=30, gtol
     # Initializing the LD embedding.
     X_lds = np.ascontiguousarray(a=np.reshape(a=init_lds(X_hds=X_hds, N=N, init=init, n_components=n_components, rand_state=rand_state, var=1.0), newshape=N*n_components, order='C'), dtype=np.float64)
     # Applying the fast multi-scale t-SNE algorithm
-    fmsnepyx.fmstsne_implem(X_hds_1D, X_lds, N, M, n_components, True, 1, bht, nit_max, gtol, ftol, maxls, maxcor, 1, fseed)
+    fmsne_implem.fmstsne_implem(X_hds_1D, X_lds, N, M, n_components, True, 1, bht, nit_max, gtol, ftol, maxls, maxcor, 1, fseed)
     # Reshaping the LDS
     X_lds = np.reshape(a=X_lds, newshape=(N, n_components), order='C')
     # Returning
@@ -655,7 +655,7 @@ def red_rnx_auc(X_hds, X_lds, Kup=10000):
     X_hds_1D = np.ascontiguousarray(a=np.reshape(a=X_hds, newshape=N*M, order='C'), dtype=np.float64)
     X_lds_1D = np.ascontiguousarray(a=np.reshape(a=X_lds, newshape=N*P, order='C'), dtype=np.float64)
     # Computing the reduced quality criteria
-    auc = fmsnepyx.drqa_qnx_rnx_auc(X_hds_1D, X_lds_1D, N, M, P, Kup, qnx, rnx, rnx_size)
+    auc = fmsne_implem.drqa_qnx_rnx_auc(X_hds_1D, X_lds_1D, N, M, P, Kup, qnx, rnx, rnx_size)
     # Returning
     return rnx, auc
 
