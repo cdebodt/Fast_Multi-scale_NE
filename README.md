@@ -49,16 +49,6 @@ provides further information to get such a C compiler according to
 your system. Note also that Cython is available from the Anaconda
 Python distribution.
 
-- Run the command 'python setup.py build_ext --inplace' in the folder
-  in which you downloaded the code files provided in this
-  repository. Running this command may for instance be done from your
-  'Anaconda Prompt', if you are using the Anaconda Python
-  distribution. Check
-  'https://cython.readthedocs.io/en/latest/src/quickstart/build.html'
-  (last consulted on May 30, 2020) if you wish to have more
-  information on this step.
-
-
 ## Package functionality
 
 Neighbor Embedding
@@ -179,14 +169,14 @@ t-SNE. Journal of Machine Learning Research, 9(Nov), 2579-2605.
 [8] van der Maaten, L. (2014). Accelerating t-SNE using tree-based
 algorithms. Journal of Machine Learning Research, 15(1), 3221-3245.
 
-## Contact - Misc
+## Author
 
-author: Cyril de Bodt (Human Dynamics - MIT Media Lab, and ICTEAM - UCLouvain)
+Cyril de Bodt (Human Dynamics - MIT Media Lab, and ICTEAM - UCLouvain)
 
 @email: cdebodt __at__ mit __dot__ edu, or cyril __dot__ debodt __at__ uclouvain.be
 
-Copyright (c) 2023 Université catholique de Louvain (UCLouvain),
-ICTEAM. All rights reserved.
+The code was packaged by [Laurent Gatto](https://lgatto.github.io/)
+(Compuational Biology and Bioinformatics - UCLouvain).
 
 ## License
 
@@ -195,3 +185,6 @@ commercial purposes.
 
 The use of this software is at your own risk; the authors are not
 responsible for any damage as a result from errors in the software.
+
+Copyright (c) 2023 Université catholique de Louvain (UCLouvain),
+ICTEAM. All rights reserved.
