@@ -28,7 +28,7 @@
 #cython: warn.multiple_declarators=False
 
 #######################################################
-####################################################### Imports
+## Imports
 #######################################################
 
 # Numpy is needed to define FLOAT64_EPS. 'cimport' is used to import compile-time information about the numpy module.
@@ -50,7 +50,7 @@ from libc.float cimport DBL_MIN, DBL_MAX
 from libc.string cimport memcpy, memset
 
 #######################################################
-####################################################### Global variables
+## Global variables
 #######################################################
 
 # If some double is smaller than EPSILON_DBL in magnitude, it is considered as close to zero.
@@ -60,7 +60,7 @@ cdef double EPSILON_DBL = 1e-8
 cdef double FLOAT64_EPS = np.finfo(dtype=np.float64).eps
 
 #######################################################
-####################################################### Minimum and maximum functions
+## Minimum and maximum functions
 #######################################################
 
 cdef inline double min_arr_ptr(const double* x, Py_ssize_t m) nogil:
@@ -135,7 +135,7 @@ cdef inline double max_arr_ptr_step(const double* x, Py_ssize_t m, Py_ssize_t st
     return v
 
 #######################################################
-####################################################### Euclidean distance function
+## Euclidean distance function
 #######################################################
 
 cdef inline double sqeucl_dist_ptr(const double* x, const double* y, Py_ssize_t m) nogil:
@@ -156,7 +156,7 @@ cdef inline double sqeucl_dist_ptr(const double* x, const double* y, Py_ssize_t 
     return d
 
 #######################################################
-####################################################### Infinite distance function
+## Infinite distance function
 #######################################################
 
 cdef inline double inf_dist_ptr(const double* x, const double* y, Py_ssize_t m) nogil:
@@ -178,7 +178,7 @@ cdef inline double inf_dist_ptr(const double* x, const double* y, Py_ssize_t m) 
     return d
 
 #######################################################
-####################################################### Mean of an array
+## Mean of an array
 #######################################################
 
 cdef inline double mean_arr_ptr_step(const double* x, Py_ssize_t m, Py_ssize_t start, Py_ssize_t step, double N) nogil:
@@ -195,7 +195,7 @@ cdef inline double mean_arr_ptr_step(const double* x, Py_ssize_t m, Py_ssize_t s
     return v/N
 
 #######################################################
-####################################################### Variance of an array
+## Variance of an array
 #######################################################
 
 cdef inline double var_arr_ptr_step(const double* x, Py_ssize_t m, Py_ssize_t start, Py_ssize_t step, double N, double den_var) nogil:
@@ -216,7 +216,7 @@ cdef inline double var_arr_ptr_step(const double* x, Py_ssize_t m, Py_ssize_t st
     return v/den_var
 
 #######################################################
-####################################################### Allocation functions. The returned values must be freed.
+## Allocation functions. The returned values must be freed.
 #######################################################
 
 cdef inline void free_int_2dmat(int** arr, Py_ssize_t M):
@@ -445,7 +445,7 @@ cdef inline Py_ssize_t*** alloc_Pysst_3dmat_varK_3dK(Py_ssize_t M, Py_ssize_t N,
     return mat_ret
 
 #######################################################
-####################################################### L-BFGS optimization (C library)
+## L-BFGS optimization (C library)
 #######################################################
 
 cdef extern from "lbfgs.h":
@@ -521,7 +521,7 @@ cdef extern from "lbfgs.h":
     void lbfgs_free(lbfgsfloatval_t *)
 
 #######################################################
-####################################################### Multi-scale SNE
+## Multi-scale SNE
 #######################################################
 
 cdef inline int ms_def_n_scales(double Nd, int K_star, int L_min, bint isLmin1) nogil:
@@ -956,7 +956,7 @@ cpdef inline void mssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int 
     cdef double Nd = <double> N
 
     #####
-    ##### Perplexity-related quantities
+    ## Perplexity-related quantities
     #####
 
     cdef int K_star = 2
@@ -971,7 +971,10 @@ cpdef inline void mssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int 
         exit(EXIT_FAILURE)
 
     #####
-    ##### Computing the pairwise HD distances between the data points. The HD distances with respect to each data point are substracted from their minimum, to avoid doing it during the computation of the similarities.
+    ## Computing the pairwise HD distances between the data
+    ## points. The HD distances with respect to each data point are
+    ## substracted from their minimum, to avoid doing it during the
+    ## computation of the similarities.
     #####
 
     # K_star now refers to N-1
@@ -984,7 +987,7 @@ cpdef inline void mssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int 
         exit(EXIT_FAILURE)
 
     #####
-    ##### Computing the HD bandwidths for all data points and scales
+    ## Computing the HD bandwidths for all data points and scales
     #####
 
     # HD bandwidths for each scale and data point. Only stored if fit_U is True.
@@ -996,7 +999,7 @@ cpdef inline void mssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int 
         exit(EXIT_FAILURE)
 
     #####
-    ##### Computing the LD precisions
+    ## Computing the LD precisions
     #####
 
     # Array storing the LD precisions for each scale when fit_U is False.
@@ -1026,7 +1029,7 @@ cpdef inline void mssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int 
     PyMem_Free(K_h)
 
     #####
-    ##### Allocating memory to store the HD similarities
+    ## Allocating memory to store the HD similarities
     #####
 
     # Array storing the multi-scale HD similarities, as computed during the multi-scale optimization
@@ -1051,7 +1054,7 @@ cpdef inline void mssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int 
         exit(EXIT_FAILURE)
 
     #####
-    ##### Multi-scale optimization
+    ## Multi-scale optimization
     #####
 
     # Number of bytes of the array for the optimization
@@ -1158,7 +1161,7 @@ cpdef inline void mssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int 
     PyMem_Free(popt)
 
 #######################################################
-####################################################### Multi-scale t-SNE
+## Multi-scale t-SNE
 #######################################################
 
 cdef inline void mstsne_symmetrize(Py_ssize_t N_1, double** a, double** a_sym) nogil:
@@ -1249,7 +1252,7 @@ cpdef inline void mstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
     X_hds and X_lds must both be in a 1d array
     """
     #####
-    ##### Perplexity-related quantities
+    ## Perplexity-related quantities
     #####
     cdef int K_star = 2
     cdef bint isnotLmin1 = L_min != 1
@@ -1263,7 +1266,10 @@ cpdef inline void mstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
         exit(EXIT_FAILURE)
 
     #####
-    ##### Computing the pairwise HD distances between the data points. The HD distances with respect to each data point are substracted from their minimum, to avoid doing it during the computation of the similarities.
+    ## Computing the pairwise HD distances between the data
+    ##   points. The HD distances with respect to each data point are
+    ##   substracted from their minimum, to avoid doing it during the
+    ##   computation of the similarities.
     #####
 
     # K_star now refers to N-1
@@ -1276,7 +1282,7 @@ cpdef inline void mstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
         exit(EXIT_FAILURE)
 
     #####
-    ##### Computing the HD bandwidths for all data points and scales
+    ## Computing the HD bandwidths for all data points and scales
     #####
 
     # HD bandwidths for each scale and data point. Only stored if fit_U is True.
@@ -1291,7 +1297,7 @@ cpdef inline void mstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
     PyMem_Free(K_h)
 
     #####
-    ##### Allocating memory to store the HD similarities
+    ## Allocating memory to store the HD similarities
     #####
 
     # Array storing the multi-scale HD similarities, as computed during the multi-scale optimization
@@ -1312,7 +1318,7 @@ cpdef inline void mstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
         exit(EXIT_FAILURE)
 
     #####
-    ##### Multi-scale optimization
+    ## Multi-scale optimization
     #####
 
     cdef int prod_N_nc = N*n_components
@@ -1397,7 +1403,7 @@ cpdef inline void mstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
     PyMem_Free(popt)
 
 #######################################################
-####################################################### Vantage-point trees
+## Vantage-point trees
 #######################################################
 
 cdef extern from "vptree.h":
@@ -1406,7 +1412,7 @@ cdef extern from "vptree.h":
         void search(const double* x, int k, int* idx)
 
 #######################################################
-####################################################### Space-partitioning trees
+## Space-partitioning trees
 #######################################################
 
 cdef struct SpNode:
@@ -1993,7 +1999,7 @@ cdef inline void free_SpTree(SpTree* tree):
     PyMem_Free(tree)
 
 #######################################################
-####################################################### Fast multi-scale SNE
+## Fast multi-scale SNE
 #######################################################
 
 cdef inline int* f_def_n_ds_h(bint isLmin1, int N, int shift_L_min, double Nd, Py_ssize_t L):
@@ -2700,7 +2706,7 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
     cdef double Nd = <double> N
 
     #####
-    ##### Perplexity-related quantities
+    ## Perplexity-related quantities
     #####
 
     cdef int K_star = 2
@@ -2719,7 +2725,7 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
         exit(EXIT_FAILURE)
 
     #####
-    ##### Computing the size of the subsampled data set at each scale
+    ## Computing the size of the subsampled data set at each scale
     #####
 
     # Size of the subsampled data set at each scale (except the first scale if L_min==1)
@@ -2730,7 +2736,7 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
         exit(EXIT_FAILURE)
 
     #####
-    ##### Indexes of all the examples in the data set
+    ## Indexes of all the examples in the data set
     #####
 
     cdef int* all_ind = seq_1step(N)
@@ -2741,7 +2747,7 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
         exit(EXIT_FAILURE)
 
     #####
-    ##### Number of neighbors to compute per data point for each scale
+    ## Number of neighbors to compute per data point for each scale
     #####
 
     cdef int* nnn_h = f_def_nnn_h(L, K_h, n_ds_h, cperp)
@@ -2755,7 +2761,8 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
     sLm_nt = f_nnn_tot(nnn_h, L)
 
     #####
-    ##### Computing the considered neighbors of each data point, for each scale and random sampling
+    ## Computing the considered neighbors of each data point, for each
+    ## scale and random sampling
     #####
 
     # Allocating memory to store the indexes of the considered neighbors for each data point, for each random sampling. In function f_nn_ds_hdprec, arr_nn_i_rs will be reallocated so that its third dimension may be smaller than sLm_nt.
@@ -2823,7 +2830,7 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
     PyMem_Free(nnn_h)
 
     #####
-    ##### Data structures to compute the LD distances in the gradient
+    ## Data structures to compute the LD distances in the gradient
     #####
 
     cdef Py_ssize_t*** nn_i_rs_id_dld = alloc_Pysst_3dmat_varK(n_rs, N, nnn_i_rs)
@@ -2877,7 +2884,7 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
         exit(EXIT_FAILURE)
 
     #####
-    ##### Computing the LD precisions
+    ## Computing the LD precisions
     #####
 
     # Array storing the LD precisions for each scale when fit_U is False. They are common to all random samplings.
@@ -2958,7 +2965,7 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
     PyMem_Free(K_h)
 
     #####
-    ##### Allocating memory to store the HD similarities
+    ## Allocating memory to store the HD similarities
     #####
 
     # Array storing the multi-scale HD similarities, as computed during the multi-scale optimization
@@ -3003,7 +3010,7 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
         exit(EXIT_FAILURE)
 
     #####
-    ##### Multi-scale optimization
+    ## Multi-scale optimization
     #####
 
     # Number of bytes of the array for the optimization
@@ -3258,13 +3265,19 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
     param.max_iterations = nit_max
     param.max_linesearch = maxls
     param.past = 1
-    # We modify the default values of the minimum and maximum step sizes of the line search because the problem is badly scaled
+    # We modify the default values of the minimum and maximum step
+    # sizes of the line search because the problem is badly scaled
     param.max_step = DBL_MAX
     param.min_step = DBL_MIN
 
-    # Will update the number of supplementary attributes in the space-partitioning tree, which is augmenting with the number of scales which are considered
+    # Will update the number of supplementary attributes in the
+    # space-partitioning tree, which is augmenting with the number of
+    # scales which are considered
     K_star = N*sizeof(double)
-    # k refers to the number of currently considered scales and h to the index of the current scale. Nd will store the inverse of the number of currently considered scales.
+    # k refers to the number of currently considered scales and h to
+    # the index of the current scale. Nd will store the inverse of
+    # the number of currently considered scales.
+
     cdef Py_ssize_t k, h
     h = L-1
     for k in range(1, L+1, 1):
@@ -3316,7 +3329,7 @@ cpdef inline void fmssne_implem(double[::1] X_hds, double[::1] X_lds, int N, int
     PyMem_Free(popt)
 
 #######################################################
-####################################################### Fast multi-scale t-SNE
+## Fast multi-scale t-SNE
 #######################################################
 
 cdef inline Py_ssize_t*** fms_sym_nn_match(Py_ssize_t n_rs, Py_ssize_t N_1, int*** arr_nn_i_rs, int** nnn_i_rs, Py_ssize_t n_components):
@@ -3576,7 +3589,7 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
     cdef double Nd = <double> N
 
     #####
-    ##### Perplexity-related quantities
+    ## Perplexity-related quantities
     #####
 
     cdef int K_star = 2
@@ -3595,7 +3608,7 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
         exit(EXIT_FAILURE)
 
     #####
-    ##### Computing the size of the subsampled data set at each scale
+    ## Computing the size of the subsampled data set at each scale
     #####
 
     # Size of the subsampled data set at each scale (except the first scale if L_min==1)
@@ -3606,7 +3619,7 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
         exit(EXIT_FAILURE)
 
     #####
-    ##### Indexes of all the examples in the data set
+    ## Indexes of all the examples in the data set
     #####
 
     cdef int* all_ind = seq_1step(N)
@@ -3617,7 +3630,7 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
         exit(EXIT_FAILURE)
 
     #####
-    ##### Number of neighbors to compute per data point for each scale
+    ## Number of neighbors to compute per data point for each scale
     #####
 
     cdef int* nnn_h = f_def_nnn_h(L, K_h, n_ds_h, cperp)
@@ -3631,10 +3644,14 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
     sLm_nt = f_nnn_tot(nnn_h, L)
 
     #####
-    ##### Computing the considered neighbors of each data point, for each scale and random sampling
+    ## Computing the considered neighbors of each data point, for each
+    ## scale and random sampling
     #####
 
-    # Allocating memory to store the indexes of the considered neighbors for each data point, for each random sampling. In function f_nn_ds_hdprec, arr_nn_i_rs will be reallocated so that its third dimension may be smaller than sLm_nt.
+    # Allocating memory to store the indexes of the considered
+    # neighbors for each data point, for each random sampling. In
+    # function f_nn_ds_hdprec, arr_nn_i_rs will be reallocated so that
+    # its third dimension may be smaller than sLm_nt.
     cdef int*** arr_nn_i_rs = alloc_int_3dmat(n_rs, N, sLm_nt)
     if arr_nn_i_rs is NULL:
         PyMem_Free(K_h)
@@ -3644,7 +3661,8 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
         printf("Error in fmssne_implem function of fmsne_implem.pyx: out of memory for arr_nn_i_rs.")
         exit(EXIT_FAILURE)
 
-    # Allocating memory to store the number of considered neighbors for each data point, for each random sampling
+    # Allocating memory to store the number of considered neighbors
+    # for each data point, for each random sampling
     cdef int** nnn_i_rs = calloc_int_2dmat(n_rs, N)
     if nnn_i_rs is NULL:
         PyMem_Free(K_h)
@@ -3655,7 +3673,14 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
         printf("Error in fmssne_implem function of fmsne_implem.pyx: out of memory for nnn_i_rs.")
         exit(EXIT_FAILURE)
 
-    # Allocating memory to store the squared distances between the considered neighbors and each data point, for each random sampling. In fact, for each random sampling rs, data point i and neighbor j, ds_nn_i_rs[rs][i][j] will contain the minimum squared distance between i and all its neighbors in random sampling rs minus the squared distance between i and j. In function f_nn_ds_hdprec, ds_nn_i_rs will be reallocated so that its third dimension may be smaller than sLm_nt.
+    # Allocating memory to store the squared distances between the
+    # considered neighbors and each data point, for each random
+    # sampling. In fact, for each random sampling rs, data point i and
+    # neighbor j, ds_nn_i_rs[rs][i][j] will contain the minimum
+    # squared distance between i and all its neighbors in random
+    # sampling rs minus the squared distance between i and j. In
+    # function f_nn_ds_hdprec, ds_nn_i_rs will be reallocated so that
+    # its third dimension may be smaller than sLm_nt.
     cdef double*** ds_nn_i_rs = alloc_dble_3dmat(n_rs, N, sLm_nt)
     if ds_nn_i_rs is NULL:
         PyMem_Free(K_h)
@@ -3667,7 +3692,8 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
         printf("Error in fmssne_implem function of fmsne_implem.pyx: out of memory for ds_nn_i_rs.")
         exit(EXIT_FAILURE)
 
-    # Allocating memory to store the HD bandwidths for each scale, data point and random sampling
+    # Allocating memory to store the HD bandwidths for each scale,
+    # data point and random sampling
     cdef double*** tau_h_i_rs = alloc_dble_3dmat(L, n_rs, N)
     if tau_h_i_rs is NULL:
         PyMem_Free(K_h)
@@ -3680,7 +3706,12 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
         printf("Error in fmssne_implem function of fmsne_implem.pyx: out of memory for tau_h_i_rs.")
         exit(EXIT_FAILURE)
 
-    # Computing the considered nearest neighbors of each data point for each random sampling and filling arr_nn_i_rs, nnn_i_rs, ds_nn_i_rs and tau_h_i_rs. The considered nearest neighbors of each data point are also symmetrized for each random sampling (i.e. if i is in the considered nearest neighbors of j, than j must also be in the considered nearest neighbors of i).
+    # Computing the considered nearest neighbors of each data point
+    # for each random sampling and filling arr_nn_i_rs, nnn_i_rs,
+    # ds_nn_i_rs and tau_h_i_rs. The considered nearest neighbors of
+    # each data point are also symmetrized for each random sampling
+    # (i.e. if i is in the considered nearest neighbors of j, than j
+    # must also be in the considered nearest neighbors of i).
     if f_nn_ds_hdprec(d_hds, K_h, N, L, n_ds_h, all_ind, nnn_h, isLmin1, &X_hds[0], n_rs, arr_nn_i_rs, nnn_i_rs, ds_nn_i_rs, tau_h_i_rs, sLm_nt, True):
         PyMem_Free(K_h)
         PyMem_Free(n_ds_h)
@@ -3700,7 +3731,7 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
     PyMem_Free(nnn_h)
 
     #####
-    ##### Data structure facilitating the symmetrization of the HD similarities
+    ## Data structure facilitating the symmetrization of the HD similarities
     #####
 
     # sLm_nt now refers to N-1
@@ -3718,7 +3749,7 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
     free_int_3dmat(arr_nn_i_rs, n_rs, N)
 
     #####
-    ##### Allocating memory to store the HD similarities
+    ## Allocating memory to store the HD similarities
     #####
 
     # Array storing the multi-scale HD similarities, as computed during the multi-scale optimization
@@ -3743,7 +3774,7 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
         exit(EXIT_FAILURE)
 
     #####
-    ##### Data structures to compute the LD distances when evaluating the cost function and its gradient
+    ## Data structures to compute the LD distances when evaluating the cost function and its gradient
     #####
 
     # isLmin1 now refers to n_rs > 1
@@ -3812,7 +3843,7 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
         idnn_in_ars = NULL
 
     #####
-    ##### Multi-scale optimization
+    ## Multi-scale optimization
     #####
 
     # Pointer toward the start of the LDS
@@ -3908,13 +3939,18 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
     param.max_step = DBL_MAX
     param.min_step = DBL_MIN
 
-    # k refers to the number of currently considered scales and h to the index of the current scale. Nd will store the inverse of the number of currently considered scales.
+    # k refers to the number of currently considered scales and h to
+    # the index of the current scale. Nd will store the inverse of the
+    # number of currently considered scales.
     cdef Py_ssize_t k, h
     h = L-1
     for k in range(1, L+1, 1):
         # Updates related to the current multi-scale optimization step
         f_update_mso_step(k, h, n_rs, N, nnn_i_rs, ds_nn_i_rs, tau_h_i_rs, simhd_ms_nn_i_rs, simhd_h_nn_i_rs)
-        # Symmetrizing the multi-scale HD similarities. Be careful that only the similarities between i and j such that j>i are actually symetrized, since only these are used in the evaluate function.
+        # Symmetrizing the multi-scale HD similarities. Be careful
+        # that only the similarities between i and j such that j>i are
+        # actually symetrized, since only these are used in the
+        # evaluate function.
         fmstsne_symmetrize(n_rs, sLm_nt, simhd_ms_nn_i_rs, m_nn, simhd_h_nn_i_rs)
         # Performing the optimization
         lbfgs(prod_N_nc, xopt, NULL, fmstsne_evaluate, NULL, popt, pparam)
@@ -3940,7 +3976,7 @@ cpdef inline void fmstsne_implem(double[::1] X_hds, double[::1] X_lds, int N, in
     PyMem_Free(popt)
 
 #######################################################
-####################################################### Quality criteria Q_NX and R_NX
+## Quality criteria Q_NX and R_NX
 #######################################################
 
 cdef struct nnRank:
