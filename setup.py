@@ -25,8 +25,7 @@ setuptools.setup(
         'Cython',
         'matplotlib',
         'sklearn',
-        'scipy',
-        'os'],
+        'scipy'],
     setup_requires = [
         'Cython',
         'numpy'],
