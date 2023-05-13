@@ -3,10 +3,20 @@ from distutils.extension import Extension
 from Cython.Build import cythonize
 import Cython.Distutils
 import numpy as np
+import codecs
+
+def get_version():
+    f = codecs.open("./fmsne/__init__.py").read()
+    for line in f.splitlines():
+        if line.startswith('__version__'):
+            delim = '"' if '"' in line else "'"
+            return line.split(delim)[1]
+    else:
+        raise RuntimeError('Unable to find version string')
 
 setuptools.setup(
     name = 'fmsne',
-    version = '0.4.0',
+    version = get_version(),
     description = 'Fast Multi-Scale Neighbour Embedding',
     url = "https://github.com/cdebodt/Fast_Multi-scale_NE",
     packages = ['fmsne'],
@@ -25,8 +35,7 @@ setuptools.setup(
         'Cython',
         'matplotlib',
         'sklearn',
-        'scipy',
-        'os'],
+        'scipy'],
     setup_requires = [
         'Cython',
         'numpy'],
