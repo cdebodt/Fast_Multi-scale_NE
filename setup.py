@@ -15,15 +15,9 @@ def get_version():
         raise RuntimeError('Unable to find version string')
 
 setuptools.setup(
-    name = 'fmsne',
     version = get_version(),
-    description = 'Fast Multi-Scale Neighbour Embedding',
-    url = "https://github.com/cdebodt/Fast_Multi-scale_NE",
     packages = ['fmsne'],
-    author = 'Cyril de Bodt',
-    author_email = 'cyril.debodt@uclouvain.be',
-    license = "MIT",
-    platforms = ['any'],
+    # platforms = ['any'],
     ext_modules = cythonize([
         Extension('fmsne_implem', [
             'fmsne/fmsne_implem.pyx',
