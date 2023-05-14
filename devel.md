@@ -1,7 +1,8 @@
 ## Package devel notes
 
-
-Useful resource: [How to Publish an Open-Source Python Package to PyPI](https://realpython.com/pypi-publish-python-package/)
+Useful resource:
+- [How to Publish an Open-Source Python Package to PyPI](https://realpython.com/pypi-publish-python-package/)
+- [Building and Distributing Packages with Setuptools](https://setuptools.pypa.io/en/latest/userguide/)
 
 ### Install from local repo:
 
