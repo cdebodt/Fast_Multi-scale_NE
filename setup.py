@@ -17,7 +17,7 @@ def get_version():
 setuptools.setup(
     version = get_version(),
     packages = ['fmsne'],
-    # platforms = ['any'],
+    platforms = ['any'],
     ext_modules = cythonize([
         Extension('fmsne_implem', [
             'fmsne/fmsne_implem.pyx',
