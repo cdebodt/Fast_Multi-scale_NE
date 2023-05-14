@@ -36,18 +36,25 @@ BibTeX entry:
 
 ## Installation
 
+Clone the repository and install locally
+
 ```
 pip install .
 ```
 
-Make sure to have Cython ('https://cython.org/', last consulted on May
-30, 2020) installed on your system. For instructions, check
-'https://cython.readthedocs.io/en/latest/src/quickstart/install.html'
-(last consulted on May 30, 2020). Note that this web link mentions
-that Cython requires a C compiler to be present on the system, and
-provides further information to get such a C compiler according to
-your system. Note also that Cython is available from the Anaconda
-Python distribution.
+Or install from PyPI
+
+```
+pip install fmsne
+```
+
+Make sure to have [Cython](https://cython.org/) installed on your
+system - Check instructions
+[here](https://cython.readthedocs.io/en/latest/src/quickstart/install.html).
+Note that this web link mentions that Cython requires a C compiler to
+be present on the system, and provides further information to get such
+a C compiler according to your system. Note also that Cython is
+available from the Anaconda Python distribution.
 
 ## Package functionality
 
