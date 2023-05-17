@@ -901,3 +901,27 @@ def viz_qa(Ly, fname=None, f_format=None, ymin=None, ymax=None, Lmarkers=None, L
     # Saving or showing the figure, and closing
     save_show_fig(fname=fname, f_format=f_format)
     plt.close()
+
+## Utils function that  - added by lgatto <2023-05-17>
+
+def eval_dr_quality_from_data(X, Y):
+    """
+    Computes the pairwise Euclidean distances of HD and LD
+    embeddings X and Y and then computes the DR quality assessment
+    criteria R_{NX}(K) and AUC. See `eucl_dist_matr` and
+    `eval_dr_quality` functions for details.
+    """
+    return eval_dr_quality(d_hd = eucl_dist_matr(X),
+                           d_ld = eucl_dist_matr(Y))
+
+
+def eval_red_rnx_aux_from_data(X, Y, Kup = 10000):
+    """
+    Computes the pairwise Euclidean distances of HD and LD
+    embeddings X and Y and then computes the reduced DR quality
+    assessment criteria R_{NX}(K) and AUC. See `red_rnx_auc` and
+    `eval_dr_quality` functions for details.
+    """
+    return eval_dr_quality(d_hd = eucl_dist_matr(X),
+                           d_ld = eucl_dist_matr(Y),
+                           Kup = Kup)
