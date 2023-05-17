@@ -2,16 +2,20 @@
  *  vptree.h
  *  Implementation of a vantage-point tree.
  *
- *  Authors: this code was created by Laurens van der Maaten, and modified by Cyril de Bodt (ICTEAM - UCLouvain).
+ *  Authors: this code was created by Laurens van der Maaten, and
+ *  modified by Cyril de Bodt (ICTEAM - UCLouvain).
  *  @email: cyril __dot__ debodt __at__ uclouvain.be
  *  Last modification date: May 30th, 2020
- *  The original version of the code is available at: https://github.com/lvdmaaten/bhtsne/blob/master/vptree.h (last consulted on May 27, 2020).
- *  
+ *  The original version of the code is available at:
+ *  https://github.com/lvdmaaten/bhtsne/blob/master/vptree.h (last
+ *  consulted on May 27, 2020).
+ *
  *  Copyright (c) 2014, Laurens van der Maaten (Delft University of Technology)
  *  All rights reserved.
  *
- *  You can use, modify and redistribute this software freely, but not for commercial purposes. 
- *  The use of this software is at your own risk; the authors are not responsible for any damage as a result from errors in the software.
+ *  The use of this software is at your own risk; the authors are not
+ *  responsible for any damage as a result from errors in the
+ *  software.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:
@@ -23,19 +27,19 @@
  *  3. All advertising materials mentioning features or use of this software
  *     must display the following acknowledgement:
  *     This product includes software developed by the Delft University of Technology.
- *  4. Neither the name of the Delft University of Technology nor the names of 
- *     its contributors may be used to endorse or promote products derived from 
+ *  4. Neither the name of the Delft University of Technology nor the names of
+ *     its contributors may be used to endorse or promote products derived from
  *     this software without specific prior written permission.
  *
  *  THIS SOFTWARE IS PROVIDED BY LAURENS VAN DER MAATEN ''AS IS'' AND ANY EXPRESS
- *  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
- *  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO 
- *  EVENT SHALL LAURENS VAN DER MAATEN BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
- *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
- *  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR 
- *  BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
- *  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+ *  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ *  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ *  EVENT SHALL LAURENS VAN DER MAATEN BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ *  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ *  BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ *  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  *  OF SUCH DAMAGE.
  *
  */
@@ -51,7 +55,7 @@
 #ifndef VPTREE_H
 #define VPTREE_H
 
-double euclidean_distance_datapoint(const double* x1, const double* x2, int dim) {  // Euclidean distance between two data points 
+double euclidean_distance_datapoint(const double* x1, const double* x2, int dim) {  // Euclidean distance between two data points
     double diff = x1[0] - x2[0];
     double dd = diff * diff;
     int d;
@@ -90,12 +94,12 @@ public:
         free(_idx);
         free(_dsamp);
     }
-    
-    // Destructor. It frees the ressources allocated in the object and the object. 
+
+    // Destructor. It frees the ressources allocated in the object and the object.
     ~VpTree() {
         delete _root;
     }
-    
+
     // Function that uses the tree to find the k nearest neighbors of x
     void search(const double* x, int k, int* indices) {
         // Use a priority queue to store intermediate results
@@ -111,14 +115,14 @@ public:
             heap.pop();
         }
     }
-    
+
 private:
     const double* _X;     // Data, stored in a one-dimensional array
     int _D;         // Dimension
-    int* _idx;      // Array with the indexes of the data points. Only initialized and used when building the tree. 
-    double* _dsamp; // Array used to select the vantage-points. Only initialized and used when building the tree. 
+    int* _idx;      // Array with the indexes of the data points. Only initialized and used when building the tree.
+    double* _dsamp; // Array used to select the vantage-points. Only initialized and used when building the tree.
     double _tau;    // Threshold for the search
-    
+
     // Single node of a VP tree (it has a vantage point and a radius; left children contains points that are closer to the vantage point than the radius)
     struct Node {
         int index;                      // index of a point in the data set
@@ -129,7 +133,7 @@ private:
         double rMd;                     // Maximum distance to the current node in the right child
         Node* left;                     // points closer by than threshold
         Node* right;                    // points farther away than threshold
-        
+
         Node (int idx, double left_md, double left_Md, double right_md, double right_Md, Node* le, Node* ri) {       // Constructor, initializing the fields
             index = idx;
             lmd = left_md;
@@ -140,13 +144,13 @@ private:
             left = le;
             right = ri;
         }
-        
+
         ~Node() {                       // Destructor
             delete left;
             delete right;
         }
     }* _root;
-    
+
     double euclidean_distance(int i1, int i2) {       // Euclidean distance between two data points
         int idx1 = i1*_D;
         int idx2 = i2*_D;
@@ -161,7 +165,7 @@ private:
         }
         return sqrt(dd);
     }
-    
+
     double euclidean_distance_target(int i1, const double* x) {       // Euclidean distance between a data point and the target
         int idx1 = i1*_D;
         double diff = _X[idx1] - x[0];
@@ -174,12 +178,12 @@ private:
         }
         return sqrt(dd);
     }
-    
+
     // An item on the intermediate result queue
     struct HeapItem {
         int index;
         double dist;
-        
+
         HeapItem (int ind, double d) {
             index = ind;
             dist = d;
@@ -188,7 +192,7 @@ private:
             return dist < o.dist;
         }
     };
-    
+
     // Distance comparator to use in std::nth_element
     struct DistanceComparator {
         int dim;
@@ -203,7 +207,7 @@ private:
             return euclidean_distance_datapoint(x, &X[idx1*dim], dim) < euclidean_distance_datapoint(x, &X[idx2*dim], dim);
         }
     };
-    
+
     double eval_vp_cand(int ivp, int n_samp, int med, int ndp, int lower, int lower_up_vp_cand) {
         int i;
         int iidx;
@@ -231,14 +235,14 @@ private:
             // Storing the distance between iidx and ivp
             _dsamp[ss] = euclidean_distance(ivp, iidx);
         }
-        
+
         // Putting the best vantage-point found so far back to lower_up_vp_cand
         if (pos_best_vp != lower_up_vp_cand) {
             last = _idx[pos_best_vp];
             _idx[pos_best_vp] = _idx[lower_up_vp_cand];
             _idx[lower_up_vp_cand] = last;
         }
-        
+
         // Computing the median of the distances in _dsamp
         std::nth_element(_dsamp, _dsamp+med, _dsamp+n_samp);
         // Computing the score
@@ -251,7 +255,7 @@ private:
         }
         return score;
     }
-    
+
     void select_vp(int lower, int ndp) {
         if (ndp == 2) {
             if (rand()%2 == 1) {        // Moving the selected vantage-point at lower
@@ -287,7 +291,7 @@ private:
                 // Sampling another vantage-point candidate
                 i = rand()%ndp_vp_cand + lower_up_vp_cand;
                 ivp = _idx[i];
-                // Swapping with current best vp. We need to proceed like this to use eval_vp_cand. 
+                // Swapping with current best vp. We need to proceed like this to use eval_vp_cand.
                 if (i != lower_up_vp_cand) {
                     _idx[i] = _idx[lower_up_vp_cand];
                 }
@@ -308,23 +312,23 @@ private:
             }
         }
     }
-    
+
     // Function that (recursively) fills the tree
     Node* buildFromPoints(int lower, int upper) {
         int dul = upper - lower;     // Difference between upper and lower
-        if (dul > 1) {          // We did not arrived at a leaf yet. 
+        if (dul > 1) {          // We did not arrived at a leaf yet.
             // ==== Heuristic selection of the vantage point
             // Select the index of the vantage-point and move it at lower position
             select_vp(lower, dul);
             // Swapping lower and the vantage point
             int vpind = _idx[lower];
-            
+
             // ==== Random selection of the vantage-point
             //int ivp_r = rand()%dul + lower;
             //int vpind = _idx[ivp_r];
             //_idx[ivp_r] = _idx[lower];
             //_idx[lower] = vpind;
-            
+
             // Index of the data with the median distance to the selected vantage-point
             int lower_1 = lower+1;
             int median = (upper + lower_1) / 2;
@@ -339,7 +343,7 @@ private:
             double v2;
             int i;
             if (n_child == 0) {
-                lmd = 0.0; 
+                lmd = 0.0;
                 lMd = 0.0;
             } else {
                 if (n_child%2 == 0) {
@@ -422,13 +426,13 @@ private:
             Node* right = buildFromPoints(median, upper);
             // Returning the new node. The treshold of the new node will be the distance to the median.
             return new Node(vpind, lmd, lMd, rmd, rMd, left, right);
-        } else if (dul == 1) {    // Last data point to consider: we arrived at a leaf. 
+        } else if (dul == 1) {    // Last data point to consider: we arrived at a leaf.
             return new Node(_idx[lower], 0.0, 0.0, 0.0, 0.0, NULL, NULL);
         } else {                  // No more data point to consider: we arrived at a leaf.
             return NULL;
         }
     }
-    
+
     // Helper function that searches the tree
     void search_rec(const Node* node, const double* x, int k, std::priority_queue<HeapItem>& heap) {
         // Compute distance between x and current node
@@ -436,13 +440,13 @@ private:
         // If current node within radius tau
         if (dist < _tau) {
             bool full = heap.size() == k;
-            // If we already collected k neighbors, remove the farthest one. 
+            // If we already collected k neighbors, remove the farthest one.
             if (full) {
                 heap.pop();
             }
             // Add current node to result list
             heap.push(HeapItem(node->index, dist));
-            // Update value of tau. If full is False, we still need to test heap.size() == k, if the heap became full meanwhile. 
+            // Update value of tau. If full is False, we still need to test heap.size() == k, if the heap became full meanwhile.
             if (full || heap.size() == k) {
                 _tau = heap.top().dist;
             }
@@ -468,7 +472,7 @@ private:
                 if (has_right && (dist > node->rmd - _tau) && (dist < node->rMd + _tau)) {
                     search_rec(node->right, x, k, heap);
                 }
-                
+
                 // if there can still be neighbors inside the ball, recursively search left child
                 if (has_left && (dist < node->lMd + _tau)) {
                     search_rec(node->left, x, k, heap);
