@@ -922,6 +922,6 @@ def eval_red_rnx_aux_from_data(X, Y, Kup = 10000):
     assessment criteria R_{NX}(K) and AUC. See `red_rnx_auc` and
     `eval_dr_quality` functions for details.
     """
-    return eval_dr_quality(d_hd = eucl_dist_matr(X),
-                           d_ld = eucl_dist_matr(Y),
-                           Kup = Kup)
+    return red_rnx_auc(d_hd = eucl_dist_matr(X),
+                       d_ld = eucl_dist_matr(Y),
+                       Kup = Kup)
