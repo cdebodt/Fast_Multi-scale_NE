@@ -915,13 +915,13 @@ def eval_dr_quality_from_data(X, Y):
                            d_ld = eucl_dist_matr(Y))
 
 
-def eval_red_rnx_aux_from_data(X, Y, Kup = 10000):
+def eval_red_rnx_auc_from_data(X, Y, Kup = 10000):
     """
     Computes the pairwise Euclidean distances of HD and LD
     embeddings X and Y and then computes the reduced DR quality
     assessment criteria R_{NX}(K) and AUC. See `red_rnx_auc` and
     `eval_dr_quality` functions for details.
     """
-    return red_rnx_auc(d_hd = eucl_dist_matr(X),
-                       d_ld = eucl_dist_matr(Y),
+    return red_rnx_auc(X_hds = eucl_dist_matr(X),
+                       X_lds = eucl_dist_matr(Y),
                        Kup = Kup)
