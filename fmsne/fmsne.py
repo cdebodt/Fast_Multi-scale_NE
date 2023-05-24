@@ -914,6 +914,19 @@ def eval_dr_quality_from_data(X, Y):
     return eval_dr_quality(d_hd = eucl_dist_matr(X),
                            d_ld = eucl_dist_matr(Y))
 
+def eval_dr_quality_from_list(X, Ys):
+    """
+    Computes the pairwise Euclidean distances of HD and several LD
+    embeddings X and Ys and then computes the DR quality assessment
+    criteria R_{NX}(K) and AUC for each (X, Yi).
+    """
+    rnx = []
+    d_hd = eucl_dist_matr(X)
+    for Y in Ys:
+        d_ld = eucl_dist_matr(Y)
+        rnx.append(eval_dr_quality(d_hd = d_hd,
+                                   d_ld = d_ld))
+    return(rnx)
 
 def eval_red_rnx_auc_from_data(X, Y, Kup = 10000):
     """
