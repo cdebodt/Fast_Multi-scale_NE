@@ -922,8 +922,8 @@ def eval_dr_quality_from_list(X, Ys):
     """
     rnx = []
     d_hd = eucl_dist_matr(X)
-    for Y in Ys:
-        d_ld = eucl_dist_matr(np.array(Y))
+    for Y in Ys.values():
+        d_ld = eucl_dist_matr(Y)
         rnx.append(eval_dr_quality(d_hd = d_hd,
                                    d_ld = d_ld))
     return(rnx)
