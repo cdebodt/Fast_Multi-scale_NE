@@ -907,9 +907,9 @@ def viz_qa(Ly, fname=None, f_format=None, ymin=None, ymax=None, Lmarkers=None, L
 def eval_dr_quality_from_data(X, Y):
     """
     Computes the pairwise Euclidean distances of HD and LD
-    embeddings X and Y and then computes the DR quality assessment
-    criteria R_{NX}(K) and AUC. See `eucl_dist_matr` and
-    `eval_dr_quality` functions for details.
+    embeddings X {array} and Y {array} and then computes the DR
+    quality assessment criteria R_{NX}(K) and AUC. See
+    `eucl_dist_matr` and `eval_dr_quality` functions for details.
     """
     return eval_dr_quality(d_hd = eucl_dist_matr(X),
                            d_ld = eucl_dist_matr(Y))
@@ -917,8 +917,8 @@ def eval_dr_quality_from_data(X, Y):
 def eval_dr_quality_from_list(X, Ys):
     """
     Computes the pairwise Euclidean distances of HD and several LD
-    embeddings X and Ys and then computes the DR quality assessment
-    criteria R_{NX}(K) and AUC for each (X, Yi).
+    embeddings X {array} and Ys {dict} and then computes the DR
+    quality assessment criteria R_{NX}(K) and AUC for each (X, Yi).
     """
     rnx = []
     d_hd = eucl_dist_matr(X)
@@ -931,8 +931,8 @@ def eval_dr_quality_from_list(X, Ys):
 def eval_red_rnx_auc_from_data(X, Y, Kup = 10000):
     """
     Computes the reduced DR quality assessment criteria R_{NX}(K)
-    and AUC. See `red_rnx_auc` and `eval_dr_quality` functions for
-    details.
+    and AUC for arrays X and Y. See `red_rnx_auc` and
+    `eval_dr_quality` functions for details.
     """
     return red_rnx_auc(X_hds = X,
                        X_lds = Y,
