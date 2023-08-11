@@ -28,7 +28,7 @@ setuptools.setup(
         'numba',
         'Cython',
         'matplotlib',
-        'sklearn',
+        'scikit-learn', ## was sklearn
         'scipy'],
     setup_requires = [
         'Cython',
