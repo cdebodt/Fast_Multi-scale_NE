@@ -429,6 +429,219 @@ def fmstsne(X_hds, n_components=2, init='pca', rand_state=None, nit_max=30, gtol
 
 
 # ============================================================================
+# Nonlinear dimensionality reduction through multi-scale SNE (Ms SNE) for 
+# anndata object[2].  See the documentation of the 'mssne' function for details.
+# Given a data set with N samples, the 'mssne' function has O(N**2
+# log(N)) time complexity. It can hence run on databases with up to a
+# few thousands of samples.
+# ============================================================================
+
+def mssne_anndata(adata, n_components = 2, rand_state=None, init='pca', nit_max=30, gtol=10.0**(-5), ftol=2.2204460492503131e-09, maxls=50, maxcor=10, fit_U=True):
+    """
+    Apply multi-scaleSNE on a data set X_hds to reduce its
+    dimension, as presented in [6].
+
+    In:
+
+    - adata: an anndata object preprocessed, with at least PCA 
+        coordinate.
+
+    - n_pcs: number of dimensions of the low-dimensional
+      embedding of X_hds.
+
+    - random_state: random state to use in init_lds. See init_lds for
+      documentation.
+
+    - bht: a float strictly between 0 and 1 and which is the
+      Barnes-Hut threshold to employ. If it is not strictly between 0
+      and 1, an error is raised.
+
+    - fseed: a strictly positive integer being the random seed used in
+      Cython to perform the random sampling of the HD data set at the
+      different scales. If it is not an integer >=1, an error is
+      raised.
+
+    Out:
+
+    An anndata object  containing a 2-D numpy.ndarray X_lds with shape 
+    (N, n_components), containing the low dimensional data set 
+    representing X_hds. It contains one example per row and one feature 
+    per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
+
+    Remarks:
+    - L-BFGS algorithm is used, as in [1].
+    - Multi-scale optimization is performed, as presented in [2].
+    - Euclidean distances are employed to evaluate the pairwise
+      similarities in both the HD and LD spaces.
+
+    """
+    X_hds = adata.obsm["X_pca"]
+    X_ld_mssne = mssne(X_hds=X_hds, n_components=n_components, init=init, rand_state=np.random.RandomState(rand_state), nit_max=nit_max, gtol=gtol, ftol=ftol, maxls=maxls, maxcor=maxcor, fit_U=fit_U)
+    adata.obsm["mssne"] = X_ld_mssne
+    return(adata)
+
+# ============================================================================
+# Nonlinear dimensionality reduction through multi-scale t-SNE (Ms
+# t-SNE) for anndata object [6]. See the documentation of the 'mstsne' function 
+# for details.  Given a data set with N samples, the 'mstsne' function has
+# O(N**2 log(N)) time complexity. It can hence run on databases with
+# up to a few thousands of samples.
+# ============================================================================
+
+
+def mstsne_anndata(adata, n_components=2, init='pca', rand_state=None, nit_max=30, gtol=10.0**(-5), ftol=2.2204460492503131e-09, maxls=50, maxcor=10):
+    """
+    Apply multi-scale t-SNE on a data set X_hds to reduce its
+    dimension, as presented in [6].
+
+    In:
+
+    - adata: an anndata object preprocessed, with at least PCA 
+        coordinate.
+
+    - n_pcs: number of dimensions of the low-dimensional
+      embedding of X_hds.
+
+    - random_state: random state to use in init_lds. See init_lds for
+      documentation.
+
+    - bht: a float strictly between 0 and 1 and which is the
+      Barnes-Hut threshold to employ. If it is not strictly between 0
+      and 1, an error is raised.
+
+    - fseed: a strictly positive integer being the random seed used in
+      Cython to perform the random sampling of the HD data set at the
+      different scales. If it is not an integer >=1, an error is
+      raised.
+
+    Out:
+
+    An anndata object  containing a 2-D numpy.ndarray X_lds with shape 
+    (N, n_components), containing the low dimensional data set 
+    representing X_hds. It contains one example per row and one feature 
+    per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
+
+    Remarks:
+    - L-BFGS algorithm is used, as in [1].
+    - Multi-scale optimization is performed, as presented in [2].
+    - Euclidean distances are employed to evaluate the pairwise
+      similarities in both the HD and LD spaces.    - fseed: a strictly positive integer being the random seed used in
+      Cython to perform the random sampling of the HD data set at the
+      different scales. If it is not an integer >=1, an error is
+      raised.
+
+    """
+    X_hds = adata.obsm["X_pca"]
+    X_ld_mstsne = mstsne(X_hds=X_hds, n_components=n_components, init=init, rand_state=np.random.RandomState(rand_state), nit_max=nit_max, gtol=gtol, ftol=ftol, maxls=maxls, maxcor=maxcor)
+    adata.obsm["mstsne"] = X_ld_mstsne
+    return(adata)
+
+# ============================================================================
+# Nonlinear dimensionality reduction through fast multi-scale SNE (FMs
+# SNE) for anndata object [1]. The demo at the end of this file presents how 
+# it can be used.  Given a data set with N samples, the 'fmssne' function has
+# O(N (log(N))**2) time complexity. It can hence run on very
+# large-scale databases.
+# ============================================================================
+
+def fmssne_anndata(adata, n_components=2, init='pca', rand_state=None, nit_max=30, gtol=10.0**(-5), ftol=2.2204460492503131e-09, maxls=50, maxcor=10, fit_U=True, bht=0.45, fseed=1):
+    """
+    Apply fast multi-scale SNE on a data set X_hds to reduce its
+    dimension, as presented in [1].
+
+    In:
+
+    - adata: an anndata object preprocessed, with at least PCA 
+        coordinate.
+
+    - n_pcs: number of dimensions of the low-dimensional
+      embedding of X_hds.
+
+    - random_state: random state to use in init_lds. See init_lds for
+      documentation.
+
+    - bht: a float strictly between 0 and 1 and which is the
+      Barnes-Hut threshold to employ. If it is not strictly between 0
+      and 1, an error is raised.
+
+    - fseed: a strictly positive integer being the random seed used in
+      Cython to perform the random sampling of the HD data set at the
+      different scales. If it is not an integer >=1, an error is
+      raised.
+
+    Out:
+
+    An anndata object  containing a 2-D numpy.ndarray X_lds with shape 
+    (N, n_components), containing the low dimensional data set 
+    representing X_hds. It contains one example per row and one feature 
+    per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
+
+    Remarks:
+    - L-BFGS algorithm is used, as in [1].
+    - Multi-scale optimization is performed, as presented in [2].
+    - Euclidean distances are employed to evaluate the pairwise
+      similarities in both the HD and LD spaces.
+
+    """
+    X_hds = adata.obsm["X_pca"]
+    X_ld_fmssne = fmssne(X_hds=X_hds, n_components=n_components, init=init, rand_state=np.random.RandomState(rand_state), nit_max=nit_max, gtol=gtol, ftol=ftol, maxls=maxls, maxcor=maxcor, fit_U=fit_U, bht=bht, fseed=fseed)
+    adata.obsm["fmssne"] = X_ld_fmssne
+    return(adata)
+
+# ============================================================================
+# Nonlinear dimensionality reduction through fast multi-scale t-SNE
+# (FMs t-SNE) for anndata object [1].  See the documentation of the 'fmstsne' function
+# for details. Given a data set with N samples, the 'fmstsne' function
+# has O(N (log(N))**2) time complexity. It can hence run on very
+# large-scale databases.
+# ============================================================================
+
+def fmstsne_anndata(adata, n_components=2, random_state=None, nit_max=30, gtol=10.0**(-5),ftol=2.2204460492503131e-09, maxls=50, maxcor=10, bht=0.75, fseed=1):
+    """
+    Apply fast multi-scale t-SNE on a data set X_hds to reduce its
+    dimension, as presented in [1].
+
+    In:
+
+    - adata: an anndata object preprocessed, with at least PCA 
+        coordinate.
+
+    - n_pcs: number of dimensions of the low-dimensional
+      embedding of X_hds.
+
+    - random_state: random state to use in init_lds. See init_lds for
+      documentation.
+
+    - bht: a float strictly between 0 and 1 and which is the
+      Barnes-Hut threshold to employ. If it is not strictly between 0
+      and 1, an error is raised.
+
+    - fseed: a strictly positive integer being the random seed used in
+      Cython to perform the random sampling of the HD data set at the
+      different scales. If it is not an integer >=1, an error is
+      raised.
+
+    Out:
+
+    An anndata object  containing a 2-D numpy.ndarray X_lds with shape 
+    (N, n_components), containing the low dimensional data set 
+    representing X_hds. It contains one example per row and one feature 
+    per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
+
+    Remarks:
+    - L-BFGS algorithm is used, as in [1].
+    - Multi-scale optimization is performed, as presented in [2].
+    - Euclidean distances are employed to evaluate the pairwise
+      similarities in both the HD and LD spaces.
+
+    """
+    X_hds = adata.obsm["X_pca"]
+    HX_ld_fmstsne = fmstsne(X_hds=X_hds, n_components=n_components, init="pca", rand_state=np.random.RandomState(random_state), bht=bht,ftol=2.2204460492503131e-09, nit_max=nit_max, gtol=gtol, maxls=maxls, maxcor=maxcor,fseed=fseed)
+    adata.obsm["fmstsne"] = HX_ld_fmstsne
+    return(adata)
+
+
+# ============================================================================
 # Unsupervised DR quality assessment: rank-based criteria measuring
 # the HD neighborhood preservation in the LD embedding [3, 4]. These
 # criteria are used in the experiments reported in [1]. The main
