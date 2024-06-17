@@ -446,20 +446,37 @@ def mssne_anndata(adata, n_components = 2, rand_state=None, init='pca', nit_max=
     - adata: an anndata object preprocessed, with at least PCA 
         coordinate.
 
-    - n_pcs: number of dimensions of the low-dimensional
+    - n_components: number of dimensions of the low-dimensional
       embedding of X_hds.
 
-    - random_state: random state to use in init_lds. See init_lds for
+    - init: sets the initialization of the LD embedding as described
+      in the function init_lds.
+
+    - rand_state: random state to use in init_lds. See init_lds for
       documentation.
 
-    - bht: a float strictly between 0 and 1 and which is the
-      Barnes-Hut threshold to employ. If it is not strictly between 0
-      and 1, an error is raised.
+    - nit_max: maximum number of L-BFGS steps at each stage of the
+      multi-scale optimization, which is defined in [2].
 
-    - fseed: a strictly positive integer being the random seed used in
-      Cython to perform the random sampling of the HD data set at the
-      different scales. If it is not an integer >=1, an error is
-      raised.
+    - gtol: tolerance for the infinite norm of the gradient in the
+      L-BFGS algorithm. The L-BFGS iterations hence stop when max{|g_i
+      | i = 1, ..., n} <= gtol where g_i is the i-th component of the
+      gradient.
+
+    - ftol: tolerance for the relative updates of the cost function
+      value in L-BFGS.
+
+    - maxls: maximum number of line search steps per L-BFGS-B
+      iteration.
+
+    - maxcor: the maximum number of variable metric corrections used
+      to define the limited memory matrix in L-BFGS.
+
+    - fit_U: boolean indicating whether to fit the U in the definition
+      of the LD similarities in [2]. If True, the U is tuned as in
+      [2]. Otherwise, it is forced to 1. Setting fit_U to True usually
+      tends to slightly improve DR quality at the expense of slightly
+      increasing computation time.
 
     Out:
 
@@ -469,10 +486,10 @@ def mssne_anndata(adata, n_components = 2, rand_state=None, init='pca', nit_max=
     per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
 
     Remarks:
-    - L-BFGS algorithm is used, as in [1].
+    - L-BFGS algorithm is used, as suggested in [2].
     - Multi-scale optimization is performed, as presented in [2].
-    - Euclidean distances are employed to evaluate the pairwise
-      similarities in both the HD and LD spaces.
+    - Euclidean distances are employed to evaluate the pairwise similarities in both the HD and LD spaces.
+
 
     """
     X_hds = adata.obsm["X_pca"]
@@ -499,20 +516,30 @@ def mstsne_anndata(adata, n_components=2, init='pca', rand_state=None, nit_max=3
     - adata: an anndata object preprocessed, with at least PCA 
         coordinate.
 
-    - n_pcs: number of dimensions of the low-dimensional
+    - n_components: number of dimensions of the low-dimensional
       embedding of X_hds.
 
-    - random_state: random state to use in init_lds. See init_lds for
+    - init: sets the initialization of the LD embedding as described
+      in the function init_lds.
+
+    - rand_state: random state to use in init_lds. See init_lds for
       documentation.
 
-    - bht: a float strictly between 0 and 1 and which is the
-      Barnes-Hut threshold to employ. If it is not strictly between 0
-      and 1, an error is raised.
+    - nit_max: maximum number of L-BFGS steps at each stage of the multi-scale optimization.
 
-    - fseed: a strictly positive integer being the random seed used in
-      Cython to perform the random sampling of the HD data set at the
-      different scales. If it is not an integer >=1, an error is
-      raised.
+    - gtol: tolerance for the infinite norm of the gradient in the
+      L-BFGS algorithm. The L-BFGS iterations hence stop when max{|g_i
+      | i = 1, ..., n} <= gtol where g_i is the i-th component of the
+      gradient.
+
+    - ftol: tolerance for the relative updates of the cost function
+      value in L-BFGS.
+
+    - maxls: maximum number of line search steps per L-BFGS-B
+      iteration.
+
+    - maxcor: the maximum number of variable metric corrections used
+      to define the limited memory matrix in L-BFGS.
 
     Out:
 
@@ -522,13 +549,9 @@ def mstsne_anndata(adata, n_components=2, init='pca', rand_state=None, nit_max=3
     per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
 
     Remarks:
-    - L-BFGS algorithm is used, as in [1].
+    - L-BFGS algorithm is used, as suggested in [2].
     - Multi-scale optimization is performed, as presented in [2].
-    - Euclidean distances are employed to evaluate the pairwise
-      similarities in both the HD and LD spaces.    - fseed: a strictly positive integer being the random seed used in
-      Cython to perform the random sampling of the HD data set at the
-      different scales. If it is not an integer >=1, an error is
-      raised.
+    - Euclidean distances are employed to evaluate the pairwise similarities in both the HD and LD spaces.
 
     """
     X_hds = adata.obsm["X_pca"]
@@ -554,11 +577,36 @@ def fmssne_anndata(adata, n_components=2, init='pca', rand_state=None, nit_max=3
     - adata: an anndata object preprocessed, with at least PCA 
         coordinate.
 
-    - n_pcs: number of dimensions of the low-dimensional
+    - n_components: number of dimensions of the low-dimensional
       embedding of X_hds.
 
-    - random_state: random state to use in init_lds. See init_lds for
+    - init: sets the initialization of the LD embedding as described
+      in the function init_lds.
+
+    - rand_state: random state to use in init_lds. See init_lds for
       documentation.
+
+    - nit_max: maximum number of L-BFGS steps at each stage of the
+      multi-scale optimization.
+
+    - gtol: tolerance for the infinite norm of the gradient in the
+      L-BFGS algorithm. The L-BFGS iterations hence stop when max{|g_i
+      | i = 1, ..., n} <= gtol where g_i is the i-th component of the
+      gradient.
+
+    - ftol: tolerance for the relative updates of the cost function
+      value in L-BFGS.
+
+    - maxls: maximum number of line search steps per L-BFGS-B iteration.
+
+    - maxcor: the maximum number of variable metric corrections used
+      to define the limited memory matrix in L-BFGS.
+
+    - fit_U: boolean indicating whether to fit the U in the definition
+      of the LD similarities in [2]. If True, the U is tuned as in
+      [2]. Otherwise, it is forced to 1. Setting fit_U to True usually
+      tends to slightly improve DR quality at the expense of slightly
+      increasing computation time.
 
     - bht: a float strictly between 0 and 1 and which is the
       Barnes-Hut threshold to employ. If it is not strictly between 0
@@ -579,8 +627,7 @@ def fmssne_anndata(adata, n_components=2, init='pca', rand_state=None, nit_max=3
     Remarks:
     - L-BFGS algorithm is used, as in [1].
     - Multi-scale optimization is performed, as presented in [2].
-    - Euclidean distances are employed to evaluate the pairwise
-      similarities in both the HD and LD spaces.
+    - Euclidean distances are employed to evaluate the pairwise similarities in both the HD and LD spaces.
 
     """
     X_hds = adata.obsm["X_pca"]
@@ -606,11 +653,30 @@ def fmstsne_anndata(adata, n_components=2, random_state=None, nit_max=30, gtol=1
     - adata: an anndata object preprocessed, with at least PCA 
         coordinate.
 
-    - n_pcs: number of dimensions of the low-dimensional
+    - n_components: number of dimensions of the low-dimensional
       embedding of X_hds.
 
-    - random_state: random state to use in init_lds. See init_lds for
+    - init: sets the initialization of the LD embedding as described
+      in the function init_lds.
+
+    - rand_state: random state to use in init_lds. See init_lds for
       documentation.
+
+    - nit_max: maximum number of L-BFGS steps at each stage of the
+      multi-scale optimization.
+
+    - gtol: tolerance for the infinite norm of the gradient in the
+      L-BFGS algorithm. The L-BFGS iterations hence stop when max{|g_i
+      | i = 1, ..., n} <= gtol where g_i is the i-th component of the
+      gradient.
+
+    - ftol: tolerance for the relative updates of the cost function
+      value in L-BFGS.
+
+    - maxls: maximum number of line search steps per L-BFGS-B iteration.
+
+    - maxcor: the maximum number of variable metric corrections used
+      to define the limited memory matrix in L-BFGS.
 
     - bht: a float strictly between 0 and 1 and which is the
       Barnes-Hut threshold to employ. If it is not strictly between 0
