@@ -706,7 +706,7 @@ def fmstsne_anndata(adata, n_components=2, random_state=None, nit_max=30, gtol=1
 
     """
     X_hds = adata.obsm["X_pca"]
-    HX_ld_fmstsne = fmstsne(X_hds=X_hds, n_components=n_components, init="pca", rand_state=np.random.RandomState(random_state), bht=bht,ftol=2.2204460492503131e-09, nit_max=nit_max, gtol=gtol, maxls=maxls, maxcor=maxcor,fseed=fseed)
+    HX_ld_fmstsne = fmstsne(X_hds=X_hds, n_components=n_components, init="pca", rand_state=np.random.RandomState(random_state), bht=bht,ftol=ftol, nit_max=nit_max, gtol=gtol, maxls=maxls, maxcor=maxcor,fseed=fseed)
     adata.obsm["fmstsne"] = HX_ld_fmstsne
     return(adata)
 
