@@ -484,6 +484,7 @@ def mssne_anndata(adata, n_components = 2, rand_state=None, init='pca', nit_max=
     (N, n_components), containing the low dimensional data set 
     representing X_hds. It contains one example per row and one feature 
     per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
+    The 2-D numpy.ndarray is stored in anndata.obsm["mssne"].
 
     Remarks:
     - L-BFGS algorithm is used, as suggested in [2].
@@ -547,6 +548,7 @@ def mstsne_anndata(adata, n_components=2, init='pca', rand_state=None, nit_max=3
     (N, n_components), containing the low dimensional data set 
     representing X_hds. It contains one example per row and one feature 
     per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
+    The 2-D numpy.ndarray is stored in anndata.obsm["mstsne"].
 
     Remarks:
     - L-BFGS algorithm is used, as suggested in [2].
@@ -623,6 +625,7 @@ def fmssne_anndata(adata, n_components=2, init='pca', rand_state=None, nit_max=3
     (N, n_components), containing the low dimensional data set 
     representing X_hds. It contains one example per row and one feature 
     per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
+    The 2-D numpy.ndarray is stored in anndata.obsm["fmssne"].
 
     Remarks:
     - L-BFGS algorithm is used, as in [1].
@@ -693,6 +696,7 @@ def fmstsne_anndata(adata, n_components=2, random_state=None, nit_max=30, gtol=1
     (N, n_components), containing the low dimensional data set 
     representing X_hds. It contains one example per row and one feature 
     per column. X_lds[i,:] contains the LD coordinates of the HD sample X_hds[i,:].
+    The 2-D numpy.ndarray is stored in anndata.obsm["fmstsne"].
 
     Remarks:
     - L-BFGS algorithm is used, as in [1].
